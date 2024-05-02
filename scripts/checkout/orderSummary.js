@@ -1,15 +1,16 @@
-import {cart, 
+import { cart, 
   removeFromCart, 
   updateQuantity,
   updateCartQuantity,
   updateDeliveryOption,
 } from '../../data/cart.js';
-import {products, getProduct} from '../../data/products.js';
-import {formatCurrency} from '../utils/money.js';
+import { products, getProduct } from '../../data/products.js';
+import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
-//Today's date and then we add 7 days to the date
+//Practice code - Today's date and then we add 7 days to the date
 /* const today = dayjs();
 const deliveryDate =  today.add(7, 'days');
 console.log(deliveryDate.format('dddd, MMMM, D')) */
@@ -133,6 +134,7 @@ export function renderOrderSummary() {
     const {productId, deliveryOptionId} = element.dataset
     updateDeliveryOption(productId, deliveryOptionId);
     renderOrderSummary();
+    renderPaymentSummary();
   })
   })
   
@@ -147,6 +149,7 @@ export function renderOrderSummary() {
       
     container.remove(); 
     updateCartQuantity(); 
+    renderPaymentSummary();
     });
   });
 
@@ -190,6 +193,7 @@ export function renderOrderSummary() {
         let newQuantity = Number(quantityInput.value);
         updateQuantity(productId, newQuantity);
         updateCartQuantity();
+        renderPaymentSummary();
       })
     });
      
