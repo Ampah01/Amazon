@@ -1,3 +1,4 @@
 export function formatCurrency(priceCents) {
- return (priceCents / 100).toFixed(2)
+  //Helps round the number before giving 2 decimal places
+ return (Math.round(priceCents) / 100).toFixed(2)
 }
