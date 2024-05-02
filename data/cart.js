@@ -90,3 +90,17 @@ export function updateQuantity(productId, newQuantity) {
 
   saveToStorage();
 }
+//We need the product i want to update and the delivery option the will be chosen
+// we have to loop through the cart to find the product first and update the delivery option of that product
+export function updateDeliveryOption(productId, deliveryOptionId){
+  let matchingItem;
+
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+         matchingItem = cartItem;
+    };  
+  });
+
+  matchingItem.deliveryOptionId = deliveryOptionId
+  saveToStorage()
+}
