@@ -657,25 +657,5 @@ export const products = [
       "mens"
     ]
   },
-  {
-    id: "1d2",
-    image: "images/products/umbrella.jpg",
-    name: "Umbrella",
-    rating: {
-      stars: 3.9,
-      count: 2021
-    },
-    priceCents: 2000
-  },
-  {
-    id: "1d1",
-    image: "images/products/backpack.jpg",
-    name: "Backpack",
-    rating: {
-      stars: 4.7,
-      count: 2671
-    },
-    priceCents: 7400
-  },
   
 ];
