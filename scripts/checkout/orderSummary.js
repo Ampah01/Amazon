@@ -185,6 +185,7 @@ export function renderOrderSummary() {
         updateQuantity(productId, newQuantity);
         renderCheckoutHeader();
         renderPaymentSummary();
+        renderOrderSummary();
       })
     });
      
@@ -192,9 +193,3 @@ export function renderOrderSummary() {
 
 renderOrderSummary();
 
-/* let samHere = [1,2,3];
-
-function myData(x, ...sam){
-  return x + ...sam;
-}
-console.log(myData(2,1,2,3)) */
