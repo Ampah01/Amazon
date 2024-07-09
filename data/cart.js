@@ -1,106 +1,76 @@
-export let cart;
+// Initialize cart variable
+export let cart = [];
 
+// Load cart from local storage on module import
 loadFromStorage();
 
 export function loadFromStorage() {
-  cart = JSON.parse(localStorage.getItem('cart')) 
+  const storedCart = JSON.parse(localStorage.getItem('cart'));
 
-  if(!cart){
-[{
-  productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-  quantity: 2,
-  deliveryOptionId: '3'
-},
-{
-  productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-  quantity: 1,
-  deliveryOptionId: '2'
-}];
+  if (storedCart) {
+    cart = storedCart;
+  } else {
+    // Default cart structure if not found in local storage
+    cart = [];
   }
 }
 
 function saveToStorage() {
-  localStorage.setItem('cart', JSON.stringify(cart))
-};
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
 
 export function addToCart(productId) {
-  let matchingItem;
+  let matchingItem = cart.find((cartItem) => cartItem.productId === productId);
 
-  cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) {
-         matchingItem = cartItem;
-    };
-  
-  });
-
-  const quantitySelector = document.querySelector(
-    `.js-quantity-selector-${productId}`
-  );
+  const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
   const quantity = Number(quantitySelector.value);
 
   if (matchingItem) {
-    matchingItem.quantity += quantity;  
-  } else { 
+    matchingItem.quantity += quantity;
+  } else {
+    // Assuming deliveryOptionId defaults to '1' for new products
     cart.push({
-    productId,
-    quantity,
-    //For new product, deliveryOptionId will be defaulted to '1'
-    deliveryOptionId: '1'
-  });
-  };
+      productId,
+      quantity,
+      deliveryOptionId: '1'
+    });
+  }
 
   saveToStorage();
-};
-export function calculateCartQuantity(){
-      
-  let cartQuantity = 0;
-    
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;   
-  }); 
-  
-  document.querySelector('.js-cart-quantity')
-  .innerHTML = cartQuantity;
 }
 
+export function calculateCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 
 export function removeFromCart(productId) {
-
-  const newCart = [];
-
-  cart.forEach((cartItem) => {
-    if (cartItem.productId !== productId) {
-      newCart.push(cartItem);
-    };
-  });
-  cart = newCart;
-  saveToStorage();
-};
-
-export function updateQuantity(productId, newQuantity) {
-  let matchingItem;
-
-  cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) {
-      matchingItem = cartItem;
-    }
-  });
-
-  matchingItem.quantity = newQuantity;
+  cart = cart.filter((cartItem) => cartItem.productId !== productId);
 
   saveToStorage();
 }
-//We need the product i want to update and the delivery option the will be chosen
-// we have to loop through the cart to find the product first and update the delivery option of that product
-export function updateDeliveryOption(productId, deliveryOptionId){
-  let matchingItem;
 
-  cart.forEach((cartItem) => {
-    if (productId === cartItem.productId) {
-         matchingItem = cartItem;
-    };  
-  });
+export function updateQuantity(productId, newQuantity) {
+  let matchingItem = cart.find((cartItem) => cartItem.productId === productId);
 
-  matchingItem.deliveryOptionId = deliveryOptionId
-  saveToStorage()
+  if (matchingItem) {
+    matchingItem.quantity = newQuantity;
+  }
+
+  saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem = cart.find((cartItem) => cartItem.productId === productId);
+
+  if (matchingItem) {
+    matchingItem.deliveryOptionId = deliveryOptionId;
+  }
+
+  saveToStorage();
 }

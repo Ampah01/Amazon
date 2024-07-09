@@ -3,7 +3,6 @@ import {
   calculateCartQuantity,  
  } from '../data/cart.js';
 import {products} from '../data/products.js';
-import {formatCurrency} from './utils/money.js';
 
 let productsHTML = '';
 
@@ -67,13 +66,14 @@ document.querySelector('.js-product-grid')
 
  calculateCartQuantity();
 
+ let addedMessageTimeoutId;
+
 document.querySelectorAll('.js-add-to-cart-button')
  .forEach((button) => {
-//shouldn't be part of the eventlistener
-  let addedMessageTimeoutId;
+
+
 
   button.addEventListener('click', () => {
-    // const productId = button.dataset.productId;
     const {productId} = button.dataset;
 
     addToCart(productId);
