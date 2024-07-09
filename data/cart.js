@@ -1,7 +1,6 @@
-// Initialize cart variable
+
 export let cart = [];
 
-// Load cart from local storage on module import
 loadFromStorage();
 
 export function loadFromStorage() {
@@ -10,7 +9,6 @@ export function loadFromStorage() {
   if (storedCart) {
     cart = storedCart;
   } else {
-    // Default cart structure if not found in local storage
     cart = [];
   }
 }
@@ -28,7 +26,6 @@ export function addToCart(productId) {
   if (matchingItem) {
     matchingItem.quantity += quantity;
   } else {
-    // Assuming deliveryOptionId defaults to '1' for new products
     cart.push({
       productId,
       quantity,
